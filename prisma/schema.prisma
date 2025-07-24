@@ -4,6 +4,13 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+model Review{
+  id  Int @id @default(autoincrement())
+  name String 
+  email String 
+  rating Int 
+  text String 
+}
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
