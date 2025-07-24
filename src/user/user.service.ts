@@ -7,4 +7,7 @@ export class UserService {
     return `This action returns all users`;
   }
 
+  async createReview(){
+    
+  }
 }
