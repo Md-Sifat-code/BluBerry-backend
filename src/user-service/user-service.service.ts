@@ -26,4 +26,10 @@ export class UserServiceService {
     });
     return result as UserServiceDto;
   }
+
+  async deleteService(id: number): Promise<void> {
+    await (this.prisma as PrismaClient).userService.delete({
+      where: { id },
+    });
+  }
 }

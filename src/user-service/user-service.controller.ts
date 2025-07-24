@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserServiceService } from './user-service.service';
 import { UserServiceDto } from './user-service-dto/user-service-dto';
 
@@ -19,5 +19,15 @@ export class UserServiceController {
   @Post('create')
   async createService(@Body() serviceData: UserServiceDto) {
     return this.userServiceService.createService(serviceData);
+  }
+
+  @Delete(':id')
+  async deleteService(@Param('id') id: number) {
+    const service = await this.userServiceService.getServiceById(+id);
+    if (!service) {
+      return { message: 'Service not found' };
+    }
+    await this.userServiceService.deleteService(+id);
+    return { message: 'Service deleted successfully' };
   }
 }
