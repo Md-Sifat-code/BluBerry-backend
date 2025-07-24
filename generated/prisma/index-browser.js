@@ -128,6 +128,23 @@ exports.Prisma.ReviewScalarFieldEnum = {
   text: 'text'
 };
 
+exports.Prisma.UserServiceScalarFieldEnum = {
+  id: 'id',
+  fullName: 'fullName',
+  email: 'email',
+  phone: 'phone',
+  city: 'city',
+  state: 'state',
+  zip: 'zip',
+  serviceType: 'serviceType',
+  itemType: 'itemType',
+  estimatedValue: 'estimatedValue',
+  timeFrame: 'timeFrame',
+  additionalInfo: 'additionalInfo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -140,7 +157,8 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Review: 'Review'
+  Review: 'Review',
+  UserService: 'UserService'
 };
 
 /**
