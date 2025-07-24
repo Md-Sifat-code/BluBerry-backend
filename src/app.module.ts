@@ -8,11 +8,6 @@ import { UserModule } from './user/user.module';
   imports: [ConfigModule.forRoot({
      isGlobal: true   
     }), UserModule],
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-  ],
   controllers: [AppController],
   providers: [AppService],
 })
