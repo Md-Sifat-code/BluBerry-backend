@@ -9,8 +9,10 @@ import { UserModule } from './user/user.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    UserModule,
-  ],
+   
+     UserModule,
+  
+    ],
   controllers: [AppController],
   providers: [AppService],
 })
