@@ -38,3 +38,32 @@ model UserService {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+enum Condition {
+  NEW
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+}
+
+enum Confidence {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+model Item {
+  id             Int        @id @default(autoincrement())
+  itemName       String
+  description    String
+  quantity       Int
+  condition      Condition
+  issues         String
+  images         String[]
+  estimatedValue Int
+  range          String
+  confidence     Confidence
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
