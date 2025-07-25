@@ -51,7 +51,7 @@ export class UserController {
     return {
       statusCode: HttpStatus.OK,
       success: true,
-      message: 'Review updated successfully',
+      message: 'Review updated successfully done',
       data: result,
     };
   }
@@ -62,7 +62,7 @@ export class UserController {
     return {
       statusCode: HttpStatus.OK,
       success: true,
-      message: 'Review deleted successfully',
+      message: 'Review deleted successfully done',
       data: result,
     };
   }
