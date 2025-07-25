@@ -1,22 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { MailService } from './mail.service';
-
 
 @Controller('mail')
 export class MailController {
     constructor(private readonly mailService: MailService) {}
 
-    @Get('send')
-    async sendMail() {
+    @Post('send') 
+    async sendMail(@Body() body: { message: string, email: string, name: string }) {
         try {
             await this.mailService.sendEmail({
-                to: 'habibhk127@gmail.com',
+                to: 'abireshan32@gmail.com',
                 subject: 'Test Email from NestJS',
-                template: 'test-email', // Corresponds to test-email.pug in templates folder
-                context: {
-                    name: 'John Doe',
-                    message: 'This is a test email sent from blue berry app using NestJS!'
-                }
+                message:`${body.message} \n\nFrom: ${body.name} <${body.email}>`
             });
             return { success: true, message: 'Email sent successfully!' };
         } catch (error) {
