@@ -15,7 +15,7 @@ export class MailController {
                 template: 'test-email', // Corresponds to test-email.pug in templates folder
                 context: {
                     name: 'John Doe',
-                    message: 'This is a test email sent from NestJS Mailer'
+                    message: 'This is a test email sent from blue berry app using NestJS!'
                 }
             });
             return { success: true, message: 'Email sent successfully!' };
