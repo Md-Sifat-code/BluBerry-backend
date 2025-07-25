@@ -145,6 +145,21 @@ exports.Prisma.UserServiceScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ItemScalarFieldEnum = {
+  id: 'id',
+  itemName: 'itemName',
+  description: 'description',
+  quantity: 'quantity',
+  condition: 'condition',
+  issues: 'issues',
+  images: 'images',
+  estimatedValue: 'estimatedValue',
+  range: 'range',
+  confidence: 'confidence',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -154,11 +169,24 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.Condition = exports.$Enums.Condition = {
+  NEW: 'NEW',
+  EXCELLENT: 'EXCELLENT',
+  GOOD: 'GOOD',
+  FAIR: 'FAIR',
+  POOR: 'POOR'
+};
 
+exports.Confidence = exports.$Enums.Confidence = {
+  HIGH: 'HIGH',
+  MEDIUM: 'MEDIUM',
+  LOW: 'LOW'
+};
 
 exports.Prisma.ModelName = {
   Review: 'Review',
-  UserService: 'UserService'
+  UserService: 'UserService',
+  Item: 'Item'
 };
 
 /**

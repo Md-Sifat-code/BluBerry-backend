@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { UserServiceService } from './user-service.service';
 import { UserServiceDto } from './user-service-dto/user-service-dto';
 
@@ -18,7 +18,13 @@ export class UserServiceController {
 
   @Post('create')
   async createService(@Body() serviceData: UserServiceDto) {
-    return this.userServiceService.createService(serviceData);
+    const result = await this.userServiceService.createService(serviceData);
+    return {
+      statusCode: HttpStatus.CREATED,
+      success: true,
+      message: 'Service created successfully',
+      data: result,
+    };
   }
 
   @Delete(':id')
