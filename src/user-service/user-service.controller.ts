@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { UserServiceService } from './user-service.service';
 import { UserServiceDto } from './user-service-dto/user-service-dto';
 
@@ -8,12 +16,24 @@ export class UserServiceController {
 
   @Get()
   async getAllServices() {
-    return this.userServiceService.getAllServices();
+    const result = await this.userServiceService.getAllServices();
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Services retrieved successfully',
+      data: result,
+    };
   }
 
   @Get(':id')
   async getServiceById(@Param('id') id: number) {
-    return this.userServiceService.getServiceById(+id);
+    const result = await this.userServiceService.getServiceById(+id);
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Service retrieved successfully',
+      data: result,
+    };
   }
 
   @Post('create')
@@ -34,6 +54,10 @@ export class UserServiceController {
       return { message: 'Service not found' };
     }
     await this.userServiceService.deleteService(+id);
-    return { message: 'Service deleted successfully' };
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Service deleted successfully',
+    };
   }
 }
