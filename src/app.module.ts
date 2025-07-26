@@ -8,12 +8,15 @@ import { ItemModule } from './item/item.module';
 import { UserModule } from './user/review.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-     isGlobal: true   
-    }),MailModule,ItemModule,UserModule,],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MailModule,
+    ItemModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
-
-
 })
 export class AppModule {}
