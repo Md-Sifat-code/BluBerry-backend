@@ -11,11 +11,13 @@ export class ReviewDTO {
   @IsString()
   email: string;
 
+   @IsNotEmpty()
+  @IsString()
+  rating: number;
+  
   @IsNotEmpty()
   @IsString()
   text: string;
 
-  @IsNotEmpty()
-  @IsString()
-  rating: number;
+ 
 }
