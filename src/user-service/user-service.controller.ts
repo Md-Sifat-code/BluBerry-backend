@@ -16,48 +16,95 @@ export class UserServiceController {
 
   @Get()
   async getAllServices() {
-    const result = await this.userServiceService.getAllServices();
-    return {
-      statusCode: HttpStatus.OK,
-      success: true,
-      message: 'Services retrieved successfully',
-      data: result,
-    };
+    try {
+      const result = await this.userServiceService.getAllServices();
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Services retrieved successfully',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'Failed to retrieve services',
+        error: error.message,
+      };
+    }
   }
 
   @Get(':id')
   async getServiceById(@Param('id') id: number) {
-    const result = await this.userServiceService.getServiceById(+id);
-    return {
-      statusCode: HttpStatus.OK,
-      success: true,
-      message: 'Service retrieved successfully',
-      data: result,
-    };
+    try {
+      const result = await this.userServiceService.getServiceById(+id);
+      if (!result) {
+        return {
+          statusCode: HttpStatus.NOT_FOUND,
+          success: false,
+          message: 'Service not found',
+        };
+      }
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Service retrieved successfully',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'Failed to retrieve service',
+        error: error.message,
+      };
+    }
   }
 
   @Post('create')
   async createService(@Body() serviceData: UserServiceDto) {
-    const result = await this.userServiceService.createService(serviceData);
-    return {
-      statusCode: HttpStatus.CREATED,
-      success: true,
-      message: 'Service created successfully',
-      data: result,
-    };
+    try {
+      const result = await this.userServiceService.createService(serviceData);
+      return {
+        statusCode: HttpStatus.CREATED,
+        success: true,
+        message: 'Service created successfully',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'Failed to create service',
+        error: error.message,
+      };
+    }
   }
 
   @Delete(':id')
   async deleteService(@Param('id') id: number) {
-    const service = await this.userServiceService.getServiceById(+id);
-    if (!service) {
-      return { message: 'Service not found' };
+    try {
+      const service = await this.userServiceService.getServiceById(+id);
+      if (!service) {
+        return {
+          statusCode: HttpStatus.NOT_FOUND,
+          success: false,
+          message: 'Service not found',
+        };
+      }
+      await this.userServiceService.deleteService(+id);
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Service deleted successfully',
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'Failed to delete service',
+        error: error.message,
+      };
     }
-    await this.userServiceService.deleteService(+id);
-    return {
-      statusCode: HttpStatus.OK,
-      success: true,
-      message: 'Service deleted successfully',
-    };
   }
 }

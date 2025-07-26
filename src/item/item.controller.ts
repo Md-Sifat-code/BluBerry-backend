@@ -16,47 +16,95 @@ export class ItemController {
 
   @Get()
   async getAllItems() {
-    const items = await this.itemService.getAllItems();
-    return {
-      statusCode: HttpStatus.OK,
-      success: true,
-      message: 'Items retrieved successfully',
-      data: items,
-    };
+    try {
+      const items = await this.itemService.getAllItems();
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Items retrieved successfully',
+        data: items,
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'Failed to retrieve items',
+        error: error.message,
+      };
+    }
   }
+
   @Get(':id')
   async getItemById(@Param('id') id: number) {
-    const item = await this.itemService.getItemById(+id);
-    return {
-      statusCode: HttpStatus.OK,
-      success: true,
-      message: 'Item retrieved successfully',
-      data: item,
-    };
+    try {
+      const item = await this.itemService.getItemById(+id);
+      if (!item) {
+        return {
+          statusCode: HttpStatus.NOT_FOUND,
+          success: false,
+          message: 'Item not found',
+        };
+      }
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Item retrieved successfully',
+        data: item,
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'Failed to retrieve item',
+        error: error.message,
+      };
+    }
   }
 
   @Delete(':id')
   async deleteItem(@Param('id') id: number) {
-    const item = await this.itemService.getItemById(+id);
-    if (!item) {
-      return { message: 'Item not found' };
+    try {
+      const item = await this.itemService.getItemById(+id);
+      if (!item) {
+        return {
+          statusCode: HttpStatus.NOT_FOUND,
+          success: false,
+          message: 'Item not found',
+        };
+      }
+      await this.itemService.deleteItem(+id);
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Item deleted successfully',
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'Failed to delete item',
+        error: error.message,
+      };
     }
-    await this.itemService.deleteItem(+id);
-    return {
-      statusCode: HttpStatus.OK,
-      success: true,
-      message: 'Item deleted successfully',
-    };
   }
 
   @Post('create')
   async createItem(@Body() itemData: ItemDto) {
-    const result = await this.itemService.createItem(itemData);
-    return {
-      statusCode: HttpStatus.CREATED,
-      success: true,
-      message: 'Item created successfully',
-      data: result,
-    };
+    try {
+      const result = await this.itemService.createItem(itemData);
+      return {
+        statusCode: HttpStatus.CREATED,
+        success: true,
+        message: 'Item created successfully',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: 'Failed to create item',
+        error: error.message,
+      };
+    }
   }
 }
