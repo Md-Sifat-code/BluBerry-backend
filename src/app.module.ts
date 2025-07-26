@@ -9,12 +9,13 @@ import { UserModule } from './user/review.module';
 import { UserServiceModule } from './user-service/user-service.module';
 
 @Module({
+
   imports: [ConfigModule.forRoot({
      isGlobal: true   
     }),MailModule,ItemModule,UserModule,UserServiceModule],
+
+
   controllers: [AppController],
   providers: [AppService],
-
-
 })
 export class AppModule {}
