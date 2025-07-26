@@ -16,11 +16,23 @@ export class ItemController {
 
   @Get()
   async getAllItems() {
-    return this.itemService.getAllItems();
+    const items = await this.itemService.getAllItems();
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Items retrieved successfully',
+      data: items,
+    };
   }
   @Get(':id')
   async getItemById(@Param('id') id: number) {
-    return this.itemService.getItemById(+id);
+    const item = await this.itemService.getItemById(+id);
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Item retrieved successfully',
+      data: item,
+    };
   }
 
   @Delete(':id')
@@ -30,7 +42,11 @@ export class ItemController {
       return { message: 'Item not found' };
     }
     await this.itemService.deleteItem(+id);
-    return { message: 'Item deleted successfully' };
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Item deleted successfully',
+    };
   }
 
   @Post('create')

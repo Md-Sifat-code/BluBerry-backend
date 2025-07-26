@@ -19,7 +19,6 @@ import { MailController } from './mail.controller';
       defaults: {
         from: `dev.milonhossain332@gmail.com`,
       },
-      
     }),
   ],
   controllers: [MailController],
