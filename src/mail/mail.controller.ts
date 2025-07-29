@@ -11,7 +11,7 @@ export class MailController {
   ) {
     try {
       await this.mailService.sendEmail({
-        to: 'abireshan32@gmail.com',
+        to: 'alecgold808@gmail.com',
         subject: 'Test Email from NestJS',
         message: `${body.message} \n\nFrom: ${body.name} <${body.email}>`,
       });
