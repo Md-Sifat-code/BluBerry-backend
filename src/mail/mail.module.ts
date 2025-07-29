@@ -12,12 +12,12 @@ import { MailController } from './mail.controller';
         port: 587,
         secure: false,
         auth: {
-          user: 'dev.milonhossain32@gmail.com',
-          pass: 'tcfaikiprsinmvcw',
+          user: 'alecgold808@gmail.com',
+          pass: 'omuaicexgtfydfxf',
         },
       },
       defaults: {
-        from: `dev.milonhossain332@gmail.com`,
+        from: `alecgold808@gmail.com`,
       },
     }),
   ],

@@ -64,10 +64,13 @@ export class ItemController {
     }),
   )
   async createItem(
-    @Body() itemData: ItemDto,
+    @Body() body: any, 
     @UploadedFiles() files: Express.Multer.File[],
   ) {
+    const itemData: ItemDto = JSON.parse(body.itemData);
+
     const result = await this.itemService.createItem(itemData);
+
     return {
       statusCode: HttpStatus.CREATED,
       success: true,
