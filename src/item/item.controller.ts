@@ -6,10 +6,13 @@ import {
   HttpStatus,
   Param,
   Post,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { ItemDto } from './item-dto/item-dto';
-
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 @Controller('item')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
@@ -49,14 +52,28 @@ export class ItemController {
     };
   }
 
-  @Post('create')
-  async createItem(@Body() itemData: ItemDto) {
+   @Post('create')
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      storage: diskStorage({
+        destination: './files',
+        filename: (req, file, cb) => {
+          cb(null, `${Date.now()}-${file.originalname}`);
+        },
+      }),
+    }),
+  )
+  async createItem(
+    @Body() itemData: ItemDto,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
     const result = await this.itemService.createItem(itemData);
     return {
       statusCode: HttpStatus.CREATED,
       success: true,
       message: 'Item created successfully',
       data: result,
+      uploadedFiles: files,
     };
   }
 }
