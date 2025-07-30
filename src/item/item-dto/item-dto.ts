@@ -34,6 +34,8 @@ export class ItemDto {
   @IsNotEmpty()
   confidence: 'LOW' | 'MEDIUM' | 'HIGH';
 
+  contact?: number;
+
   createdAt?: Date;
   updatedAt?: Date;
 }
