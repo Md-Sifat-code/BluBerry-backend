@@ -120,6 +120,38 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.ContactScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  zipCode: 'zipCode',
+  pickupDate: 'pickupDate',
+  consent: 'consent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ItemScalarFieldEnum = {
+  id: 'id',
+  itemName: 'itemName',
+  description: 'description',
+  quantity: 'quantity',
+  condition: 'condition',
+  issues: 'issues',
+  images: 'images',
+  estimatedValue: 'estimatedValue',
+  range: 'range',
+  confidence: 'confidence',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  contactId: 'contactId'
+};
+
 exports.Prisma.ReviewScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -145,21 +177,6 @@ exports.Prisma.UserServiceScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.ItemScalarFieldEnum = {
-  id: 'id',
-  itemName: 'itemName',
-  description: 'description',
-  quantity: 'quantity',
-  condition: 'condition',
-  issues: 'issues',
-  images: 'images',
-  estimatedValue: 'estimatedValue',
-  range: 'range',
-  confidence: 'confidence',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -169,14 +186,11 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-exports.Condition = exports.$Enums.Condition = {
-  NEW: 'NEW',
-  EXCELLENT: 'EXCELLENT',
-  GOOD: 'GOOD',
-  FAIR: 'FAIR',
-  POOR: 'POOR'
-};
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.Confidence = exports.$Enums.Confidence = {
   HIGH: 'HIGH',
   MEDIUM: 'MEDIUM',
@@ -184,9 +198,10 @@ exports.Confidence = exports.$Enums.Confidence = {
 };
 
 exports.Prisma.ModelName = {
+  Contact: 'Contact',
+  Item: 'Item',
   Review: 'Review',
-  UserService: 'UserService',
-  Item: 'Item'
+  UserService: 'UserService'
 };
 
 /**

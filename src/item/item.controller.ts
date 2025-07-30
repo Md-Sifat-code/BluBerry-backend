@@ -10,9 +10,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
-import { ItemDto } from './item-dto/item-dto';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { memoryStorage } from 'multer';
+
 @Controller('item')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
@@ -27,6 +27,7 @@ export class ItemController {
       data: items,
     };
   }
+
   @Get(':id')
   async getItemById(@Param('id') id: number) {
     const item = await this.itemService.getItemById(+id);
@@ -42,8 +43,13 @@ export class ItemController {
   async deleteItem(@Param('id') id: number) {
     const item = await this.itemService.getItemById(+id);
     if (!item) {
-      return { message: 'Item not found' };
+      return {
+        statusCode: HttpStatus.NOT_FOUND,
+        success: false,
+        message: 'Item not found',
+      };
     }
+
     await this.itemService.deleteItem(+id);
     return {
       statusCode: HttpStatus.OK,
@@ -52,31 +58,29 @@ export class ItemController {
     };
   }
 
-   @Post('create')
-  @UseInterceptors(
-    FilesInterceptor('files', 10, {
-      storage: diskStorage({
-        destination: './files',
-        filename: (req, file, cb) => {
-          cb(null, `${Date.now()}-${file.originalname}`);
-        },
-      }),
-    }),
-  )
-  async createItem(
-    @Body() body: any, 
-    @UploadedFiles() files: Express.Multer.File[],
-  ) {
-    const itemData: ItemDto = JSON.parse(body.itemData);
+ @Post('create')
+@UseInterceptors(
+  FilesInterceptor('files', 20, {
+    storage: memoryStorage(),
+  }),
+)
+async createItem(
+  @UploadedFiles() files: Express.Multer.File[],
+  @Body() body: any,
+) {
+  // body.contactData and body.itemsData are JSON strings from multipart form
+  const contactDataStr = body.contactData;
+  const itemsDataStr = body.itemsData;
 
-    const result = await this.itemService.createItem(itemData);
+  // Pass these strings along with files to the service
+  const result = await this.itemService.createItem(contactDataStr, itemsDataStr, files);
 
-    return {
-      statusCode: HttpStatus.CREATED,
-      success: true,
-      message: 'Item created successfully',
-      data: result,
-      uploadedFiles: files,
-    };
-  }
+  return {
+    statusCode: HttpStatus.CREATED,
+    success: true,
+    message: 'Contact and Items created successfully',
+    data: result,
+  };
+}
+
 }

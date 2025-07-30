@@ -12,7 +12,7 @@ export class MailController {
     try {
       await this.mailService.sendEmail({
         to: 'alecgold808@gmail.com',
-        subject: 'Test Email from NestJS',
+        subject: `New message from ${body.name}`,
         message: `${body.message} \n\nFrom: ${body.name} <${body.email}>`,
       });
       return { success: true, message: 'Email sent successfully!' };
